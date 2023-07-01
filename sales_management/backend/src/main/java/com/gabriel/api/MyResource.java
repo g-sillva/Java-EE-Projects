@@ -1,4 +1,4 @@
-package com.gabriel.backend;
+package com.gabriel.api;
 
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
