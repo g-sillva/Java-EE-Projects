@@ -14,4 +14,9 @@ public class SaleService {
 	public List<Sale> getAll() {
 		return saleRepository.findAll();
 	}
+
+	public Sale findById(Long id) {
+		Sale sale = saleRepository.findById(id);
+		return sale;
+	}
 }

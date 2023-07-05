@@ -6,10 +6,20 @@ import javax.persistence.Persistence;
 
 public class JpaEntityManager {
 
-	private EntityManagerFactory factory = Persistence.createEntityManagerFactory("primary");
-	private EntityManager em = factory.createEntityManager();
-	
+	private EntityManagerFactory factory;
+	private EntityManager em;
+
+	public JpaEntityManager(String persistenceUnitName) {
+		factory = Persistence.createEntityManagerFactory(persistenceUnitName);
+		em = factory.createEntityManager();
+	}
+
 	public EntityManager getEntityManager() {
 		return em;
+	}
+
+	public void close() {
+		em.close();
+		factory.close();
 	}
 }
