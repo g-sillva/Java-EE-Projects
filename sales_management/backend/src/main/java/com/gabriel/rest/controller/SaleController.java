@@ -47,9 +47,11 @@ public class SaleController {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     public Response createSale(CreateSaleDTO sale) {
-        Object response = saleService.createSale(sale);
+        saleService.createSale(sale);
+
         return Response
-                .status(Response.Status.OK)
+                .status(Response.Status.CREATED)
+                .entity("Successfully registered sale.")
                 .build();
     }
 }
