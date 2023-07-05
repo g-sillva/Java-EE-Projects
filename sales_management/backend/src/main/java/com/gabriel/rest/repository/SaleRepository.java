@@ -2,6 +2,8 @@ package com.gabriel.rest.repository;
 
 import com.gabriel.rest.entity.Sale;
 import com.gabriel.rest.manager.JpaEntityManager;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import javax.annotation.Resource;
 import javax.persistence.EntityManager;
@@ -45,6 +47,29 @@ public class SaleRepository {
         } catch (Exception e) {
             e.printStackTrace();
             throw new WebApplicationException(500);
+        }
+    }
+
+    public boolean create(Sale sale) {
+        Session session = null;
+        Transaction transaction = null;
+        try {
+            session = objEM.unwrap(Session.class);
+            transaction = session.beginTransaction();
+
+            session.persist(sale);
+
+            transaction.commit();
+            return true;
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            throw new WebApplicationException(500);
+        } finally {
+            if (session != null) {
+                session.close();
+            }
         }
     }
 }
