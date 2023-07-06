@@ -1,19 +1,15 @@
 package com.gabriel.rest.repository;
 
-import com.gabriel.rest.entity.DTO.CreateSaleDTO;
 import com.gabriel.rest.entity.Sale;
 import com.gabriel.rest.manager.JpaEntityManager;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import javax.annotation.Resource;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import javax.ws.rs.WebApplicationException;
-import javax.ws.rs.core.Response;
 import java.util.List;
-import java.util.Objects;
 
 public class SaleRepository {
 
