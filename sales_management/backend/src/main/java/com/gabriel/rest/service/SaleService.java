@@ -1,8 +1,11 @@
 package com.gabriel.rest.service;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -27,8 +30,10 @@ public class SaleService {
 
 	public boolean createSale(CreateSaleDTO saleDTO) {
 		Sale sale = new Sale();
+		Date date = Calendar.getInstance().getTime();
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-		sale.setDate(new Date());
+		sale.setDate(dateFormat.format(date));
 		sale.setTitle(saleDTO.getTitle());
 		sale.setDescription(saleDTO.getDescription());
 		sale.setValue(saleDTO.getValue());

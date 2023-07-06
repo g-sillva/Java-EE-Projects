@@ -8,7 +8,7 @@ public class CreateSaleDTO {
     private String title;
     private BigDecimal value;
     private String description;
-    private Date date;
+    private String date;
 
     public String getTitle() {
         return title;
@@ -34,11 +34,11 @@ public class CreateSaleDTO {
         this.description = description;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 }

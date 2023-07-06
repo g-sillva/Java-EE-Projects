@@ -28,9 +28,9 @@ public class Sale {
 	
 	@Column(length = 250, nullable = false)
 	private String description;
-	
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date date;
+
+	@Column(nullable = false)
+	private String date;
 
 	public Long getId() {
 		return id;
@@ -64,11 +64,11 @@ public class Sale {
 		this.description = description;
 	}
 
-	public Date getDate() {
+	public String getDate() {
 		return date;
 	}
 
-	public void setDate(Date date) {
+	public void setDate(String date) {
 		this.date = date;
 	}
 
@@ -77,7 +77,5 @@ public class Sale {
 		return "Sale [id=" + id + ", title=" + title + ", value=" + value + ", description=" + description + ", date="
 				+ date + "]";
 	}
-	
-	
 	
 }
