@@ -106,4 +106,32 @@ public class SaleRepository {
             }
         }
     }
+
+    public Sale delete(Long id) {
+        Session session = null;
+        Transaction transaction = null;
+        try {
+            session = objEM.unwrap(Session.class);
+            transaction = session.beginTransaction();
+
+            Sale sale = (Sale) session.get(Sale.class, id);
+            if (sale == null) {
+                return null;
+            }
+            
+            session.delete(sale);
+
+            transaction.commit();
+            return sale;
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            throw new WebApplicationException(500);
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+    }
 }

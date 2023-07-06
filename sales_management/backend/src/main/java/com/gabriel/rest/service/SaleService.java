@@ -24,8 +24,7 @@ public class SaleService {
 	}
 
 	public Sale findById(Long id) {
-		Sale sale = saleRepository.findById(id);
-		return sale;
+		return saleRepository.findById(id);
 	}
 
 	public boolean createSale(CreateSaleDTO saleDTO) {
@@ -48,5 +47,9 @@ public class SaleService {
 		sale.setValue(updatedSale.getValue());
 		sale.setDescription(updatedSale.getDescription());
 		return saleRepository.update(id, sale);
+	}
+
+	public Sale deleteSale(Long id) {
+		return saleRepository.delete(id);
 	}
 }

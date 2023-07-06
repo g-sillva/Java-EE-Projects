@@ -72,4 +72,22 @@ public class SaleController {
                     .build();
         }
     }
+
+    @DELETE
+    @Path("{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response deleteSalte(@PathParam("id") Long id) {
+        Sale sale = saleService.deleteSale(id);
+        if (sale != null) {
+            return Response
+                    .status(Response.Status.OK)
+                    .entity(sale)
+                    .build();
+        } else {
+            return Response
+                    .status(Response.Status.NOT_FOUND)
+                    .entity("Sale not found for id " + id)
+                    .build();
+        }
+    }
 }
