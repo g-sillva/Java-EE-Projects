@@ -35,4 +35,13 @@ public class SaleService {
 
 		return saleRepository.create(sale);
 	}
+
+	public Sale updateSale(Long id, CreateSaleDTO updatedSale) {
+		Sale sale = new Sale();
+		sale.setTitle(updatedSale.getTitle());
+		sale.setDate(updatedSale.getDate());
+		sale.setValue(updatedSale.getValue());
+		sale.setDescription(updatedSale.getDescription());
+		return saleRepository.update(id, sale);
+	}
 }

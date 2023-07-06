@@ -1,5 +1,6 @@
 package com.gabriel.rest.repository;
 
+import com.gabriel.rest.entity.DTO.CreateSaleDTO;
 import com.gabriel.rest.entity.Sale;
 import com.gabriel.rest.manager.JpaEntityManager;
 import org.hibernate.Session;
@@ -61,6 +62,39 @@ public class SaleRepository {
 
             transaction.commit();
             return true;
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            throw new WebApplicationException(500);
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+    }
+
+    public Sale update(Long id, Sale updatedSale) {
+        Session session = null;
+        Transaction transaction = null;
+        try {
+            session = objEM.unwrap(Session.class);
+            transaction = session.beginTransaction();
+
+            Sale sale = (Sale) session.get(Sale.class, id);
+            if (sale == null) {
+                return null;
+            }
+
+            if (updatedSale.getTitle() != null) sale.setTitle(updatedSale.getTitle());
+            if (updatedSale.getDescription() != null) sale.setDescription(updatedSale.getDescription());
+            if (updatedSale.getValue() != null) sale.setValue(updatedSale.getValue());
+            if (updatedSale.getDate() != null) sale.setDate(updatedSale.getDate());
+
+            session.persist(sale);
+
+            transaction.commit();
+            return sale;
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();

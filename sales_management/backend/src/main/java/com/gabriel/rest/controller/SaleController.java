@@ -54,4 +54,22 @@ public class SaleController {
                 .entity("Successfully registered sale.")
                 .build();
     }
+
+    @PUT
+    @Path("{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updateSale(@PathParam("id") Long id, CreateSaleDTO body) {
+        Sale sale = saleService.updateSale(id, body);
+        if (sale != null) {
+            return Response
+                    .status(Response.Status.OK)
+                    .entity(sale)
+                    .build();
+        } else {
+            return Response
+                    .status(Response.Status.NOT_FOUND)
+                    .entity("Sale not found for id " + id)
+                    .build();
+        }
+    }
 }
