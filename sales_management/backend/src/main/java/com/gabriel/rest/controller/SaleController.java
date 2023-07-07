@@ -42,7 +42,14 @@ public class SaleController {
     @GET
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getSaleById(@PathParam("id") Long id) {
+    public Response getSaleById(@PathParam("id") Long id, @HeaderParam("Authorization") String authorization) {
+        if (authorization == null || !jwtService.isTokenValid(authorization)) {
+            return Response
+                    .status(Response.Status.FORBIDDEN)
+                    .entity("Invalid authorization token.")
+                    .build();
+        }
+
         Sale sale = saleService.findById(id);
         if (sale != null) {
             return Response
@@ -59,7 +66,14 @@ public class SaleController {
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public Response createSale(CreateSaleDTO saleDTO) {
+    public Response createSale(CreateSaleDTO saleDTO, @HeaderParam("Authorization") String authorization) {
+        if (authorization == null || !jwtService.isTokenValid(authorization)) {
+            return Response
+                    .status(Response.Status.FORBIDDEN)
+                    .entity("Invalid authorization token.")
+                    .build();
+        }
+
         Sale sale = saleService.createSale(saleDTO);
 
         if (sale != null) {
@@ -80,7 +94,14 @@ public class SaleController {
     @PUT
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response updateSale(@PathParam("id") Long id, CreateSaleDTO body) {
+    public Response updateSale(@PathParam("id") Long id, CreateSaleDTO body, @HeaderParam("Authorization") String authorization) {
+        if (authorization == null || !jwtService.isTokenValid(authorization)) {
+            return Response
+                    .status(Response.Status.FORBIDDEN)
+                    .entity("Invalid authorization token.")
+                    .build();
+        }
+
         Sale sale = saleService.updateSale(id, body);
         if (sale != null) {
             return Response
@@ -98,7 +119,14 @@ public class SaleController {
     @DELETE
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response deleteSalte(@PathParam("id") Long id) {
+    public Response deleteSalte(@PathParam("id") Long id, @HeaderParam("Authorization") String authorization) {
+        if (authorization == null || !jwtService.isTokenValid(authorization)) {
+            return Response
+                    .status(Response.Status.FORBIDDEN)
+                    .entity("Invalid authorization token.")
+                    .build();
+        }
+
         Sale sale = saleService.deleteSale(id);
         if (sale != null) {
             return Response
