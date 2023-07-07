@@ -42,7 +42,7 @@ public class UserController {
         String res = userService.login(loginUserDTO);
 
         return Response
-                .status(res.equals("") ? Response.Status.OK : Response.Status.FORBIDDEN)
+                .status((res.equals("Incorrect password. Try again.") || res.equals("User not found with this email.")) ? Response.Status.OK : Response.Status.FORBIDDEN)
                 .entity(res)
                 .build();
     }
