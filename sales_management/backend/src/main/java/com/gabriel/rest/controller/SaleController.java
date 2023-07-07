@@ -2,7 +2,9 @@ package com.gabriel.rest.controller;
 
 import com.gabriel.rest.entity.DTO.CreateSaleDTO;
 import com.gabriel.rest.entity.Sale;
+import com.gabriel.rest.service.JWTService;
 import com.gabriel.rest.service.SaleService;
+import com.gabriel.rest.util.JWTUtils;
 import com.sun.jersey.spi.inject.Inject;
 
 import javax.ws.rs.*;
@@ -16,10 +18,21 @@ public class SaleController {
     @Inject
     SaleService saleService;
 
+    @Inject
+    JWTService jwtService;
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getAllSales() {
+    public Response getAllSales(@HeaderParam("Authorization") String authorization) {
+        if (authorization == null || !jwtService.isTokenValid(authorization)) {
+            return Response
+                    .status(Response.Status.FORBIDDEN)
+                    .entity("Invalid authorization token.")
+                    .build();
+        }
+
         List<Sale> resultSales = saleService.getAll();
+
         return Response
                 .status(Response.Status.OK)
                 .entity(resultSales)

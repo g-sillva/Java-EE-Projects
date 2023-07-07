@@ -4,6 +4,7 @@ import com.gabriel.rest.entity.DTO.CreateUserDTO;
 import com.gabriel.rest.entity.DTO.LoginUserDTO;
 import com.gabriel.rest.entity.User;
 import com.gabriel.rest.repository.UserRepository;
+import com.gabriel.rest.util.JWTUtils;
 import com.sun.jersey.spi.inject.Inject;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -40,8 +41,7 @@ public class UserService {
         if (user != null) {
             if (BCrypt.checkpw(loginUserDTO.getPassword(), user.getPassword())) {
 
-                Key hmacKey = new SecretKeySpec(Base64.getDecoder().decode(System.getenv("jwt_secret")),
-                        SignatureAlgorithm.HS256.getJcaName());
+                Key hmacKey = JWTUtils.getKey();
 
                 return Jwts.builder()
                         .claim("username", user.getUsername())
