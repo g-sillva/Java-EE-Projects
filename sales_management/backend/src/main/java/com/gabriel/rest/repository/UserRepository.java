@@ -1,11 +1,14 @@
 package com.gabriel.rest.repository;
 
+import com.gabriel.rest.entity.Sale;
 import com.gabriel.rest.entity.User;
 import com.gabriel.rest.manager.JpaEntityManager;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.Query;
 import javax.ws.rs.WebApplicationException;
 
 public class UserRepository {
@@ -33,6 +36,27 @@ public class UserRepository {
             if (session != null) {
                 session.close();
             }
+        }
+    }
+
+    public User getUserByEmail(String userEmail) {
+        try {
+            Query query = objEM.createNativeQuery("SELECT * FROM User WHERE email = ?", User.class);
+            query.setParameter(1, userEmail);
+            Object result = query.getSingleResult();
+
+            if (result instanceof User) {
+                User user = (User) result;
+                objEM.close();
+                return user;
+            }
+            return null;
+        } catch (
+                NoResultException e) {
+            return null;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new WebApplicationException(500);
         }
     }
 }

@@ -1,6 +1,7 @@
 package com.gabriel.rest.controller;
 
 import com.gabriel.rest.entity.DTO.CreateUserDTO;
+import com.gabriel.rest.entity.DTO.LoginUserDTO;
 import com.gabriel.rest.entity.User;
 import com.gabriel.rest.service.UserService;
 import com.sun.jersey.spi.inject.Inject;
@@ -32,6 +33,17 @@ public class UserController {
                     .entity("Unable to register user")
                     .build();
         }
+    }
 
+    @POST
+    @Path("/login")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response login(LoginUserDTO loginUserDTO) {
+        String res = userService.login(loginUserDTO);
+
+        return Response
+                .status(res.equals("") ? Response.Status.OK : Response.Status.FORBIDDEN)
+                .entity(res)
+                .build();
     }
 }
