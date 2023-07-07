@@ -1,6 +1,7 @@
 package com.gabriel.rest.controller;
 
 import com.gabriel.rest.entity.DTO.CreateUserDTO;
+import com.gabriel.rest.entity.DTO.ErrorResponse;
 import com.gabriel.rest.entity.DTO.LoginUserDTO;
 import com.gabriel.rest.entity.User;
 import com.gabriel.rest.service.UserService;
@@ -30,7 +31,7 @@ public class UserController {
         } else {
             return Response
                     .status(Response.Status.BAD_REQUEST)
-                    .entity("Unable to register user")
+                    .entity(new ErrorResponse("Unable to register user", 400))
                     .build();
         }
     }

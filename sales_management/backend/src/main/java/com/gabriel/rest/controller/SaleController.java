@@ -1,10 +1,10 @@
 package com.gabriel.rest.controller;
 
 import com.gabriel.rest.entity.DTO.CreateSaleDTO;
+import com.gabriel.rest.entity.DTO.ErrorResponse;
 import com.gabriel.rest.entity.Sale;
 import com.gabriel.rest.service.JWTService;
 import com.gabriel.rest.service.SaleService;
-import com.gabriel.rest.util.JWTUtils;
 import com.sun.jersey.spi.inject.Inject;
 
 import javax.ws.rs.*;
@@ -27,7 +27,7 @@ public class SaleController {
         if (authorization == null || !jwtService.isTokenValid(authorization)) {
             return Response
                     .status(Response.Status.FORBIDDEN)
-                    .entity("Invalid authorization token.")
+                    .entity(new ErrorResponse("Invalid authorization token.", 403))
                     .build();
         }
 
@@ -46,7 +46,7 @@ public class SaleController {
         if (authorization == null || !jwtService.isTokenValid(authorization)) {
             return Response
                     .status(Response.Status.FORBIDDEN)
-                    .entity("Invalid authorization token.")
+                    .entity(new ErrorResponse("Invalid authorization token.", 403))
                     .build();
         }
 
@@ -59,7 +59,7 @@ public class SaleController {
         } else {
             return Response
                     .status(Response.Status.NOT_FOUND)
-                    .entity("Sale not found for id " + id)
+                    .entity(new ErrorResponse("Sale not found for id " + id, 404))
                     .build();
         }
     }
@@ -70,7 +70,7 @@ public class SaleController {
         if (authorization == null || !jwtService.isTokenValid(authorization)) {
             return Response
                     .status(Response.Status.FORBIDDEN)
-                    .entity("Invalid authorization token.")
+                    .entity(new ErrorResponse("Invalid authorization token.", 403))
                     .build();
         }
 
@@ -84,11 +84,9 @@ public class SaleController {
         } else {
             return Response
                     .status(Response.Status.BAD_REQUEST)
-                    .entity("Unable to register sale")
+                    .entity(new ErrorResponse("Unable to register sale", 400))
                     .build();
         }
-
-
     }
 
     @PUT
@@ -98,7 +96,7 @@ public class SaleController {
         if (authorization == null || !jwtService.isTokenValid(authorization)) {
             return Response
                     .status(Response.Status.FORBIDDEN)
-                    .entity("Invalid authorization token.")
+                    .entity(new ErrorResponse("Invalid authorization token.", 403))
                     .build();
         }
 
@@ -111,7 +109,7 @@ public class SaleController {
         } else {
             return Response
                     .status(Response.Status.NOT_FOUND)
-                    .entity("Sale not found for id " + id)
+                    .entity(new ErrorResponse("Sale not found for id " + id, 404))
                     .build();
         }
     }
@@ -123,7 +121,7 @@ public class SaleController {
         if (authorization == null || !jwtService.isTokenValid(authorization)) {
             return Response
                     .status(Response.Status.FORBIDDEN)
-                    .entity("Invalid authorization token.")
+                    .entity(new ErrorResponse("Invalid authorization token.", 403))
                     .build();
         }
 
@@ -136,7 +134,7 @@ public class SaleController {
         } else {
             return Response
                     .status(Response.Status.NOT_FOUND)
-                    .entity("Sale not found for id " + id)
+                    .entity(new ErrorResponse("Sale not found for id " + id, 404))
                     .build();
         }
     }
