@@ -1,4 +1,4 @@
-package com.gabriel.rest.entity.DTO;
+package com.gabriel.rest.entity.responses;
 
 public class ErrorResponse {
 

@@ -16,12 +16,27 @@ public class SaleRepository {
     private JpaEntityManager jpaEntityManager = new JpaEntityManager("primary");
     private EntityManager objEM = jpaEntityManager.getEntityManager();
 
-    public List<Sale> findAll() {
+    public List<Sale> findAll(int page, int pageSize) {
         try {
+            int offset = (page - 1) * pageSize;
             String sql = "SELECT c FROM Sale c";
-            List<Sale> sales = objEM.createQuery(sql, Sale.class).getResultList();
+
+            List<Sale> sales = objEM.createQuery(sql, Sale.class)
+                    .setFirstResult(offset)
+                    .setMaxResults(pageSize)
+                    .getResultList();
             objEM.close();
             return sales;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new WebApplicationException(500);
+        }
+    }
+
+    public int countAllSales() {
+        try {
+            String sql = "SELECT COUNT(c) FROM Sale c";
+            return ((Number) objEM.createQuery(sql).getSingleResult()).intValue();
         } catch (Exception e) {
             throw new WebApplicationException(500);
         }

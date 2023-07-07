@@ -1,7 +1,7 @@
 package com.gabriel.rest.controller;
 
 import com.gabriel.rest.entity.DTO.CreateUserDTO;
-import com.gabriel.rest.entity.DTO.ErrorResponse;
+import com.gabriel.rest.entity.responses.ErrorResponse;
 import com.gabriel.rest.entity.DTO.LoginUserDTO;
 import com.gabriel.rest.entity.User;
 import com.gabriel.rest.service.UserService;

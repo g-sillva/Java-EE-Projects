@@ -1,8 +1,9 @@
 package com.gabriel.rest.controller;
 
 import com.gabriel.rest.entity.DTO.CreateSaleDTO;
-import com.gabriel.rest.entity.DTO.ErrorResponse;
+import com.gabriel.rest.entity.responses.ErrorResponse;
 import com.gabriel.rest.entity.Sale;
+import com.gabriel.rest.entity.responses.PaginationResponse;
 import com.gabriel.rest.service.JWTService;
 import com.gabriel.rest.service.SaleService;
 import com.sun.jersey.spi.inject.Inject;
@@ -23,7 +24,9 @@ public class SaleController {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getAllSales(@HeaderParam("Authorization") String authorization) {
+    public Response getAllSales(@HeaderParam("Authorization") String authorization,
+                                @QueryParam("page") @DefaultValue("1") int page,
+                                @QueryParam("pageSize") @DefaultValue("10") int pageSize) {
         if (authorization == null || !jwtService.isTokenValid(authorization)) {
             return Response
                     .status(Response.Status.FORBIDDEN)
@@ -31,11 +34,10 @@ public class SaleController {
                     .build();
         }
 
-        List<Sale> resultSales = saleService.getAll();
-
+        PaginationResponse<Sale> response = saleService.getAll(page, pageSize);
         return Response
                 .status(Response.Status.OK)
-                .entity(resultSales)
+                .entity(response)
                 .build();
     }
 

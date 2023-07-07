@@ -8,16 +8,23 @@ import java.util.List;
 
 import com.gabriel.rest.entity.DTO.CreateSaleDTO;
 import com.gabriel.rest.entity.Sale;
+import com.gabriel.rest.entity.responses.PaginationResponse;
 import com.gabriel.rest.repository.SaleRepository;
 import com.sun.jersey.spi.inject.Inject;
+
+import javax.xml.ws.Response;
 
 public class SaleService {
 
 	@Inject
 	SaleRepository saleRepository;
 
-	public List<Sale> getAll() {
-		return saleRepository.findAll();
+	public PaginationResponse<Sale> getAll(int page, int pageSize) {
+		int totalItems = saleRepository.countAllSales();
+		int totalPages = (int) Math.ceil((double) totalItems / pageSize);
+
+		List<Sale> sales = saleRepository.findAll(page, pageSize);
+		return new PaginationResponse<>(page, pageSize, totalItems, totalPages, sales);
 	}
 
 	public Sale findById(Long id) {
