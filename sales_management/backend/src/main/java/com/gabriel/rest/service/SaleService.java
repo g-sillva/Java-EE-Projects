@@ -24,7 +24,7 @@ public class SaleService {
 		return saleRepository.findById(id);
 	}
 
-	public boolean createSale(CreateSaleDTO saleDTO) {
+	public Sale createSale(CreateSaleDTO saleDTO) {
 		Sale sale = new Sale();
 		Date date = Calendar.getInstance().getTime();
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

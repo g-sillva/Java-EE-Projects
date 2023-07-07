@@ -46,13 +46,22 @@ public class SaleController {
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public Response createSale(CreateSaleDTO sale) {
-        saleService.createSale(sale);
+    public Response createSale(CreateSaleDTO saleDTO) {
+        Sale sale = saleService.createSale(saleDTO);
 
-        return Response
-                .status(Response.Status.CREATED)
-                .entity("Successfully registered sale.")
-                .build();
+        if (sale != null) {
+            return Response
+                    .status(Response.Status.CREATED)
+                    .entity(sale)
+                    .build();
+        } else {
+            return Response
+                    .status(Response.Status.BAD_REQUEST)
+                    .entity("Unable to register sale")
+                    .build();
+        }
+
+
     }
 
     @PUT

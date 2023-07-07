@@ -47,7 +47,7 @@ public class SaleRepository {
         }
     }
 
-    public boolean create(Sale sale) {
+    public Sale create(Sale sale) {
         Session session = null;
         Transaction transaction = null;
         try {
@@ -57,7 +57,7 @@ public class SaleRepository {
             session.persist(sale);
 
             transaction.commit();
-            return true;
+            return sale;
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
