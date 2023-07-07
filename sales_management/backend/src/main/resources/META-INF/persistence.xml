@@ -7,6 +7,7 @@
 	<persistence-unit name="primary">
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 		<class>com.gabriel.rest.entity.Sale</class>
+		<class>com.gabriel.rest.entity.User</class>
 
 		<properties>
 			<property name="javax.persistence.jdbc.url"	value="jdbc:mysql://localhost:3306/sales_management?serverTimezone=UTC" />
