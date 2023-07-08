@@ -6,11 +6,13 @@ import com.gabriel.rest.manager.JpaEntityManager;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import javax.ws.rs.WebApplicationException;
 
+@Stateless
 public class UserRepository {
 
     private JpaEntityManager jpaEntityManager = new JpaEntityManager("primary");

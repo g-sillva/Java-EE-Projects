@@ -10,10 +10,11 @@ import com.gabriel.rest.entity.DTO.CreateSaleDTO;
 import com.gabriel.rest.entity.Sale;
 import com.gabriel.rest.entity.responses.PaginationResponse;
 import com.gabriel.rest.repository.SaleRepository;
-import com.sun.jersey.spi.inject.Inject;
 
-import javax.xml.ws.Response;
+import javax.ejb.Stateless;
+import javax.inject.Inject;
 
+@Stateless
 public class SaleService {
 
 	@Inject

@@ -5,8 +5,9 @@ import com.gabriel.rest.entity.responses.ErrorResponse;
 import com.gabriel.rest.entity.DTO.LoginUserDTO;
 import com.gabriel.rest.entity.User;
 import com.gabriel.rest.service.UserService;
-import com.sun.jersey.spi.inject.Inject;
 
+import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -14,6 +15,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 @Path("/users")
+@Stateless
 public class UserController {
 
     @Inject

@@ -14,6 +14,7 @@
           <element id="module-output" name="backend" />
         </element>
         <element id="directory" name="lib">
+          <element id="library" level="project" name="Maven: javax.activation:activation:1.1" />
           <element id="library" level="project" name="Maven: com.sun.jersey:jersey-server:1.8" />
           <element id="library" level="project" name="Maven: asm:asm:3.1" />
           <element id="library" level="project" name="Maven: com.sun.jersey:jersey-core:1.8" />
@@ -23,7 +24,6 @@
           <element id="library" level="project" name="Maven: com.sun.xml.bind:jaxb-impl:2.2.3-1" />
           <element id="library" level="project" name="Maven: javax.xml.bind:jaxb-api:2.2.2" />
           <element id="library" level="project" name="Maven: javax.xml.stream:stax-api:1.0-2" />
-          <element id="library" level="project" name="Maven: javax.activation:activation:1.1" />
           <element id="library" level="project" name="Maven: org.codehaus.jackson:jackson-core-asl:1.7.1" />
           <element id="library" level="project" name="Maven: org.codehaus.jackson:jackson-mapper-asl:1.7.1" />
           <element id="library" level="project" name="Maven: org.codehaus.jackson:jackson-jaxrs:1.7.1" />

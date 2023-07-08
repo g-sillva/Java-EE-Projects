@@ -5,19 +5,18 @@ import com.gabriel.rest.entity.DTO.LoginUserDTO;
 import com.gabriel.rest.entity.User;
 import com.gabriel.rest.repository.UserRepository;
 import com.gabriel.rest.util.JWTUtils;
-import com.sun.jersey.spi.inject.Inject;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import org.mindrot.jbcrypt.BCrypt;
 
-import javax.crypto.spec.SecretKeySpec;
+import javax.ejb.Stateless;
+import javax.inject.Inject;
 import java.security.Key;
 import java.sql.Date;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-import java.util.Base64;
 import java.util.UUID;
 
+@Stateless
 public class UserService {
 
     @Inject
