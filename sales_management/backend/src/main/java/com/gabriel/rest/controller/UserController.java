@@ -2,6 +2,7 @@ package com.gabriel.rest.controller;
 
 import com.gabriel.rest.entity.DTO.CreateUserDTO;
 import com.gabriel.rest.entity.responses.ErrorResponse;
+import com.gabriel.rest.entity.responses.TokenResponse;
 import com.gabriel.rest.entity.DTO.LoginUserDTO;
 import com.gabriel.rest.entity.User;
 import com.gabriel.rest.service.UserService;
@@ -13,6 +14,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 
 @Path("/users")
 @Stateless
@@ -42,10 +44,18 @@ public class UserController {
     @Produces(MediaType.APPLICATION_JSON)
     public Response login(LoginUserDTO loginUserDTO) {
         String res = userService.login(loginUserDTO);
+        
+        if (res.equals("Incorrect password. Try again.") ||
+        	res.equals("User not found with this email.")) {
+            return Response
+                    .status(Status.FORBIDDEN)
+                    .entity(new ErrorResponse(res, 403))
+                    .build();
+        }
 
         return Response
-                .status((res.equals("Incorrect password. Try again.") || res.equals("User not found with this email.")) ? Response.Status.OK : Response.Status.FORBIDDEN)
-                .entity(res)
+                .status(Status.OK)
+                .entity(new TokenResponse(res))
                 .build();
     }
 }

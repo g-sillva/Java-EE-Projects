@@ -53,6 +53,8 @@ public class LoginBean {
 
             if (responseEntity != null) {
                 String responseBody = EntityUtils.toString(responseEntity);
+                
+                System.out.println(response.getStatusLine().toString());
 
                 if (response.getStatusLine().getStatusCode() == 200) {
                     String token = parseTokenFromResponse(responseBody);
