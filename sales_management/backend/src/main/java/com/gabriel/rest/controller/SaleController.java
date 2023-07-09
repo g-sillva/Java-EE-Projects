@@ -7,7 +7,6 @@ import com.gabriel.rest.entity.responses.PaginationResponse;
 import com.gabriel.rest.service.JWTService;
 import com.gabriel.rest.service.SaleService;
 
-import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -16,18 +15,14 @@ import javax.ws.rs.core.Response;
 @Path("/sales")
 public class SaleController {
 
-    @Inject
-    SaleService saleService;
-
-    @Inject
-    JWTService jwtService;
+    private SaleService saleService = new SaleService();
+    private JWTService jwtService = new JWTService();
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllSales(@HeaderParam("Authorization") String authorization,
                                 @QueryParam("page") @DefaultValue("1") int page,
                                 @QueryParam("pageSize") @DefaultValue("10") int pageSize) {
-        System.out.println(jwtService);
         if (authorization == null || !jwtService.isTokenValid(authorization)) {
             return Response
                     .status(Response.Status.FORBIDDEN)

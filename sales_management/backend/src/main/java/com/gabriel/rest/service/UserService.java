@@ -19,8 +19,7 @@ import java.util.UUID;
 @Stateless
 public class UserService {
 
-    @Inject
-    UserRepository userRepository;
+    UserRepository userRepository = new UserRepository();
 
     public User createUser(CreateUserDTO userDTO) {
         User user = new User();

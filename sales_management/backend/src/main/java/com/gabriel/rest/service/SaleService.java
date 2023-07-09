@@ -10,15 +10,17 @@ import com.gabriel.rest.entity.DTO.CreateSaleDTO;
 import com.gabriel.rest.entity.Sale;
 import com.gabriel.rest.entity.responses.PaginationResponse;
 import com.gabriel.rest.repository.SaleRepository;
+import com.sun.jersey.spi.inject.Inject;
 
 import javax.ejb.Stateless;
-import javax.inject.Inject;
 
 @Stateless
 public class SaleService {
 
-	@Inject
-	SaleRepository saleRepository;
+	SaleRepository saleRepository = new SaleRepository();
+
+	public SaleService() {
+	}
 
 	public PaginationResponse<Sale> getAll(int page, int pageSize) {
 		int totalItems = saleRepository.countAllSales();

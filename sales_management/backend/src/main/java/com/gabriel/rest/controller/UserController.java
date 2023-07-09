@@ -18,8 +18,7 @@ import javax.ws.rs.core.Response;
 @Stateless
 public class UserController {
 
-    @Inject
-    UserService userService;
+    UserService userService = new UserService();
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
