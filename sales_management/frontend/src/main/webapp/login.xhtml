@@ -5,27 +5,42 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui">
 <h:head>
+	<h:outputScript library="primefaces" name="jquery/jquery.js"
+		target="head" />
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<title>Login</title>
+	
+	<script type="text/javascript">
+	    function handleLoginCallback(xhr, status, args) {
+	        if (args.jwtToken) {
+	            localStorage.setItem('jwtToken', args.jwtToken);
+	        }
+	    }
+	</script>
 </h:head>
 <h:body>
-	
+
 	<div class="login-container">
 		<div class="login-header">
 			<h1>Login</h1>
 		</div>
 		<h:form>
-	        <h:outputLabel for="email">Email:</h:outputLabel>
-	        <h:inputText id="email" value="#{loginBean.email}" required="true" />
-	
-	        <h:outputLabel for="password">Password:</h:outputLabel>
-	        <h:inputSecret id="password" value="#{loginBean.password}" required="true" />
-	
-	        <h:commandButton value="Login" action="#{loginBean.login}" />
-	
-	        <h:message for="email" style="color: red" />
-	        <h:message for="password" style="color: red" />
+			<h:outputLabel for="email">Email:</h:outputLabel>
+			<h:inputText id="email" value="#{loginBean.email}" required="true" />
+
+			<h:outputLabel for="password">Password:</h:outputLabel>
+			<h:inputSecret id="password" value="#{loginBean.password}"
+				required="true" />
+
+			<p:commandButton value="Login" action="#{loginBean.login}"
+			oncomplete="handleLoginCallback(xhr, status, args)"/>
 		</h:form>
+
+		<h:panelGroup rendered="#{not empty loginBean.errorMessage}"
+			id="errorMessage">
+			<p>#{loginBean.errorMessage}</p>
+		</h:panelGroup>
+
 	</div>
 </h:body>
 </html>

@@ -5,6 +5,7 @@ import java.io.IOException;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
@@ -15,7 +16,15 @@ import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
+import org.apache.http.protocol.RequestContent;
 import org.apache.http.util.EntityUtils;
+import org.jboss.weld.context.RequestContext;
+import org.primefaces.PrimeFaces;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @ManagedBean
 @SessionScoped
@@ -23,6 +32,15 @@ public class LoginBean {
 	
 	private String email;
 	private String password;
+	private String errorMessage;
+	private String token;
+	
+	public String getErrorMessage() {
+		return errorMessage;
+	}
+	public void setErrorMessage(String errorMessage) {
+		this.errorMessage = errorMessage;
+	}
 	public String getEmail() {
 		return email;
 	}
@@ -35,8 +53,13 @@ public class LoginBean {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
-    public void login() {
+    public String getToken() {
+		return token;
+	}
+	public void setToken(String token) {
+		this.token = token;
+	}
+	public void login() {
         String url = "http://localhost:8080/backend/api/users/login";
         String redirectUrl = "http://localhost:8080/frontend/index.xhtml";
 
@@ -53,24 +76,25 @@ public class LoginBean {
 
             if (responseEntity != null) {
                 String responseBody = EntityUtils.toString(responseEntity);
-                
-                System.out.println(response.getStatusLine().toString());
 
                 if (response.getStatusLine().getStatusCode() == 200) {
                     String token = parseTokenFromResponse(responseBody);
 
                     FacesContext context = FacesContext.getCurrentInstance();
-                    HttpSession session = (HttpSession) context.getExternalContext().getSession(true);
-                    session.setAttribute("jwtToken", token);
-
+                    
+                    PrimeFaces.current().ajax().addCallbackParam("jwtToken", token);
+                                        
                     try {
                         context.getExternalContext().redirect(redirectUrl);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 } else {
-                    FacesContext.getCurrentInstance().addMessage(null,
-                            new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro de login", "Email ou senha inválidos."));
+                	ObjectMapper objectMapper = new ObjectMapper();
+                	JsonNode responseJson = objectMapper.readTree(responseBody);
+                	
+                	String erroMsg = responseJson.get("message").asText();
+                	setErrorMessage(erroMsg);
                 }
             }
         } catch (IOException e) {
@@ -78,8 +102,11 @@ public class LoginBean {
         }
     }
     
-    private String parseTokenFromResponse(String responseBody) {
-		return "token aqui";
+    private String parseTokenFromResponse(String responseBody) throws JsonMappingException, JsonProcessingException {
+    	ObjectMapper objectMapper = new ObjectMapper();
+    	JsonNode responseJson = objectMapper.readTree(responseBody);
+    	
+    	return responseJson.get("token").asText();
     }
 
 }
