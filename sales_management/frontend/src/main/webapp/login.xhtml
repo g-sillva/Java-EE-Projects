@@ -9,6 +9,7 @@
 		target="head" />
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<title>Login</title>
+	<h:outputStylesheet library="styles" name="login.css"/>
 	
 	<script type="text/javascript">
 	    function handleLoginCallback(xhr, status, args) {
@@ -24,22 +25,25 @@
 		<div class="login-header">
 			<h1>Login</h1>
 		</div>
-		<h:form>
-			<h:outputLabel for="email">Email:</h:outputLabel>
-			<h:inputText id="email" value="#{loginBean.email}" required="true" />
+		<h:form id="login-form">
+		
+			<div class="login-form-row">
+				<h:outputLabel for="email">Email:</h:outputLabel>
+				<h:inputText id="email" value="#{loginBean.email}" required="true" p:placeholder="Insert your email"/>
+				<p:message for="email" />
+			</div>
 
-			<h:outputLabel for="password">Password:</h:outputLabel>
-			<h:inputSecret id="password" value="#{loginBean.password}"
-				required="true" />
-
-			<p:commandButton value="Login" action="#{loginBean.login}"
-			oncomplete="handleLoginCallback(xhr, status, args)"/>
+			<div class="login-form-row">
+				<h:outputLabel for="password">Password:</h:outputLabel>
+				<h:inputSecret id="password" value="#{loginBean.password}"
+					required="true" />
+			</div>
+			
+			<p:messages id="error-messages" showDetail="false" autoUpdate="true" closable="true" />
+			
+			<p:commandButton id="login-btn" value="Login" action="#{loginBean.login}"
+			oncomplete="handleLoginCallback(xhr, status, args)" update="error-messages"/>
 		</h:form>
-
-		<h:panelGroup rendered="#{not empty loginBean.errorMessage}"
-			id="errorMessage">
-			<p>#{loginBean.errorMessage}</p>
-		</h:panelGroup>
 
 	</div>
 </h:body>

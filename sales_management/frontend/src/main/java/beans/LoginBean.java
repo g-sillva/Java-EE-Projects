@@ -93,8 +93,12 @@ public class LoginBean {
                 	ObjectMapper objectMapper = new ObjectMapper();
                 	JsonNode responseJson = objectMapper.readTree(responseBody);
                 	
-                	String erroMsg = responseJson.get("message").asText();
-                	setErrorMessage(erroMsg);
+                    FacesContext context = FacesContext.getCurrentInstance();                	
+                	String errorMsg = responseJson.get("message").asText();
+                	
+                    context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, errorMsg, errorMsg));
+                    context.validationFailed();
+                	setErrorMessage(errorMsg);
                 }
             }
         } catch (IOException e) {
