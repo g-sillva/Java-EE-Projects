@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
@@ -14,6 +15,10 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
+
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 
 import models.Sale;
 
@@ -47,8 +52,20 @@ public class SalesBean {
                 String responseBody = EntityUtils.toString(responseEntity);
                 FacesContext context = FacesContext.getCurrentInstance();
 
-                System.out.println(responseBody);
                 if (response.getStatusLine().getStatusCode() == 200) {
+                	ObjectMapper objectMapper = new ObjectMapper();
+                	JsonNode responseJson = objectMapper.readTree(responseBody);
+                	
+                    ArrayNode itemsNode = (ArrayNode) responseJson.get("items");
+                    List<Sale> responseSales = new ArrayList<>();
+
+                    for (JsonNode itemNode : itemsNode) {
+                        Sale sale = objectMapper.treeToValue(itemNode, Sale.class);
+                        responseSales.add(sale);
+                    }
+
+                    setSales(responseSales);
+                	
                 } else {
                     try {
                         context.getExternalContext().redirect("http://localhost:8080/frontend/login.xhtml");
@@ -60,5 +77,9 @@ public class SalesBean {
         } catch (IOException e) {
             e.printStackTrace();
         }
+	}
+	
+	public void deleteSale(Sale sale) {
+		
 	}
 }

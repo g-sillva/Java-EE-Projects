@@ -20,7 +20,31 @@
 
 	<h:form>
 		<div class="card">
+			<p:dataTable var="sale" value="#{salesBean.sales}">
+				<p:column headerText="ID">
+					<h:outputText value="#{sale.id}" />
+				</p:column>
 
+				<p:column headerText="Title">
+					<h:outputText value="#{sale.title}" />
+				</p:column>
+
+				<p:column headerText="Description">
+					<h:outputText value="#{sale.description}" />
+				</p:column>
+				
+				<p:column headerText="Value">
+					<h:outputText value="#{sale.value}" />
+				</p:column>
+
+				<p:column headerText="Date">
+					<h:outputText value="#{sale.date}" />
+				</p:column>
+				
+				<p:column headerText="Actions">
+					<p:commandLink action="#{salesBean.deleteSale(sale)}" value="Delete" onclick="return confirm('Are you sure you want to delete this sale?');" />
+				</p:column>
+			</p:dataTable>
 		</div>
 	</h:form>
 </h:body>
