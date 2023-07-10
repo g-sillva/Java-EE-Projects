@@ -5,7 +5,7 @@
 	padding: 0;
 	box-sizing: border-box;
 	font-family: 'Open Sans', sans-serif;
-	color: #1a1a1a;
+	color: #495057;
 }
 
 header {
@@ -15,4 +15,36 @@ header {
 
 header h2 {
 	font-weight: 500;
+}
+
+.ui-datatable thead th {
+	padding: 1rem 1rem !important;
+	border: none !important;
+	text-align: left !important;
+	border-style: none !important;
+	border-width: 0px !important;
+	background: #F8F9FA !important;
+}
+
+.ui-datatable thead th span {
+	font-size: 14px;
+}
+
+.ui-datatable tbody td {
+	padding: 1rem 1rem !important;
+	border: 1px solid rgba(0,0,0,.08) !important;
+	border-width: 0 0 1px 0 !important;
+	font-size: 14px !important;
+}
+
+.ui-datatable tbody tr {
+	transition: all .1s ease;
+}
+
+.ui-datatable tbody tr:hover {
+	background: #F8F9FA;
+}
+
+.ui-datatable tbody td a i {
+	font-size: 1.5rem;
 }

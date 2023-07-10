@@ -21,7 +21,7 @@
 
 	<h:form>
 		<div class="card">
-			<p:dataTable var="sale" value="#{salesBean.sales}">
+			<p:dataTable id="sales-table" var="sale" value="#{salesBean.sales}">
 				<p:column headerText="ID">
 					<h:outputText value="#{sale.id}" />
 				</p:column>
