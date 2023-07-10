@@ -4,13 +4,24 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui">
-	
-	<h:head>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-		<title>Sales Management</title>
-	</h:head>
-	
-	<h:body>
-		<p>Main page</p>
-	</h:body>
+
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Sales Management</title>
+	<h:outputStylesheet library="styles" name="index.css" />
+</h:head>
+
+<h:body>
+	<f:event type="preRenderView" listener="#{salesBean.fetchSales}" />
+
+	<header>
+		<h2>SALES MANAGEMENT</h2>
+	</header>
+
+	<h:form>
+		<div class="card">
+
+		</div>
+	</h:form>
+</h:body>
 </html>

@@ -83,6 +83,7 @@ public class LoginBean {
                     FacesContext context = FacesContext.getCurrentInstance();
                     
                     PrimeFaces.current().ajax().addCallbackParam("jwtToken", token);
+                    FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("jwtToken", token);
                                         
                     try {
                         context.getExternalContext().redirect(redirectUrl);
